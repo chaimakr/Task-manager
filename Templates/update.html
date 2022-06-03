@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Task Manager</title>
+{% endblock %}
+
+{% block body %}
+<h1>Update Task</h1>
+
+<form action="/update/{{task.id}}" method="POST">
+    <input type="text" name="content" id="content" value="{{task.content}}">
+    <input type="submit" value="update Task">
+</form>
+{% endblock %}
