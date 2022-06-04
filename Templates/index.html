@@ -17,9 +17,9 @@
         <td>{{ task.content}}</td>
         <td> {{task.create_at}}</td>
         <td>
-            <a class="button" href="/update/{{task.id }}">Update</a>
+            <a href="/update/{{task.id }}">Update</a>
             <br>
-            <a class="button" href="/delete/{{task.id}}">Delete</a>
+            <a href="/delete/{{task.id}}">Delete</a>
         </td>
     </tr>
     {% endfor %}    
