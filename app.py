@@ -115,7 +115,7 @@ def add_task(iduser):
 
 @app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update_task(id):
-    task = Todo.query.get_or_404(id)
+    task = Todo.query.filter_by(owner_id = session['iduser'], id = id).first()
     if request.method == 'POST':
         task.content = request.form['content']
         try:
@@ -128,9 +128,9 @@ def update_task(id):
 
 
 
-@app.route('/delete/<int:iduser>/<int:id>')
+@app.route('/delete/<int:id>')
 def detele_task(id):
-    task_to_delete = Todo.query.get_or_404(id)
+    task_to_delete = Todo.query.filter_by(owner_id = session['iduser'], id = id).first()
 
     try:
         db.session.delete(task_to_delete)
@@ -141,7 +141,7 @@ def detele_task(id):
 
 @app.route('/done/<int:id>')
 def update_task_state(id):
-    task = Todo.query.get_or_404(id)
+    task = Todo.query.filter_by(owner_id = session['iduser'], id = id ).first()
     if task.state == 0:
         task.state = 1
     else:  
@@ -151,11 +151,7 @@ def update_task_state(id):
         return redirect('/')
     except:
         return 'There was an issue changing the state of your task'
-
-
-def load_user(user_id):
-    # since the user_id is just the primary key of our user table, use it in the query for the user
-    return User.query.get(int(user_id))    
+  
 if __name__ == '__main__':
     app.secret_key = 'strawhatt4'
     app.config['SESSION_TYPE'] = 'filesystem' 
