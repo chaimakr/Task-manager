@@ -6,24 +6,31 @@
 
 {% block body %}
 <h1>Task Manager</h1>
+{% if tasks|length < 1 %}
+<h4>There are no tasks. Create one below!</h4>
+{% else %}
 <table>
     <tr>
         <th>Task</th>
         <th>Creation Date</th>
+        <th>State</th>
         <th>Actions</th>
     </tr>
     {% for task in tasks %}
     <tr>
         <td>{{ task.content}}</td>
-        <td> {{task.create_at}}</td>
+        <td> {{task.create_at.strftime("%d/%m/%y %H:%M")}}</td>
+        <td> {% if task.state == 0 %}incompleted{% else %} completed {% endif %}</td>
         <td>
             <a class="button" href="/update/{{task.id }}">Update</a>
-            <br>
             <a class="button" href="/delete/{{task.id}}">Delete</a>
+            <a class="button" href="/done/{{task.id}}" >{% if task.state == 0 %}Done{% else %} Undone {% endif %}</a>
+
         </td>
     </tr>
     {% endfor %}    
 </table>
+{% endif %}
 <form action="/add" method="POST">
     <input type="text" name="content" id="content">
     <input type="submit" value="Add Task">

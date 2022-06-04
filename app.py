@@ -2,10 +2,9 @@ import datetime
 from ssl import create_default_context
 from flask import Flask, render_template, url_for , request , redirect
 from flask_sqlalchemy import SQLAlchemy
+from database import create_db
 
 app =  Flask(__name__)
-
-
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 db = SQLAlchemy(app)
 
@@ -14,6 +13,7 @@ class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     content = db.Column(db.String(200), nullable=False)
     create_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    state = db.Column(db.Integer, default=0)
 
 def __repr__(self):
     return '<Task %r>' % self.id
@@ -66,7 +66,22 @@ def detele_task(id):
     except:
         return 'There was a problem deleting that task'
 
+@app.route('/done/<int:id>')
+def update_task_state(id):
+    task = Todo.query.get_or_404(id)
+    if task.state == 0:
+        task.state = 1
+    else:  
+        task.state = 0 
+    try:
+        db.session.commit()
+        return redirect('/')
+    except:
+        return 'There was an issue changing the state of your task'
 
 
+def main( db='test.db', create=False):
+    if create:  
+        create_db(db)
 if __name__ == '__main__':
     app.run(debug=True)
