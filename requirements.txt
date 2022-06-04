@@ -1,2 +1,7 @@
 flask
 flask-sqlalchemy   
+session
+flask_session
+requests
+windows-curses
+flask_login

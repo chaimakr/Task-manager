@@ -131,6 +131,20 @@ input[type=text], select {
   margin-right: 40px;
 
 }
+[type=password], select {
+    width: 50;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #013438;
+    border-radius: 6px;
+    border-color: #013438;
+    box-sizing: border-box;
+    background-color:#1f1f1e;
+    color:white;
+    margin-right: 40px;
+  
+  }
 
 input[type=submit] {
   width: 50;
@@ -207,13 +221,13 @@ input[type=submit]:hover {
 
 /* Set a style for all buttons */
 button {
-  background-color: #04AA6D;
+  background-color: #880666;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
   border: none;
   cursor: pointer;
-  width: 100%;
+  width: 15%;
 }
 
 /* Add a hover effect for buttons */
