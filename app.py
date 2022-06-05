@@ -3,7 +3,6 @@ from datetime import datetime
 from click import launch
 from flask import Flask, render_template, session, url_for , request , redirect , flash
 from flask_session import Session
-from Models import db, Todo, User
 from database import create_db
 from task_service import *
 from user_service import *
@@ -14,7 +13,7 @@ def create_app(name):
     @app.route('/', methods=['GET'])
     def index():
         if 'logged_in' in session and session['logged_in']:
-            tasks = fetch_alltasks_by_userid(session['user_id'])
+            tasks = fetch_alltasks_by_userid(session['iduser'])
             return render_template('index.html', tasks=tasks) 
         else:    
             return render_template('home.html')
@@ -62,7 +61,7 @@ def create_app(name):
             username= request.form['username']
             password= request.form['password']
             try:
-                add_user(username,password)
+                adduser(username,password)
                 return redirect('/')
             except:
                 return 'there was an issue signing up'
@@ -83,10 +82,9 @@ def create_app(name):
         iduser = session['iduser']
         task_content= request.form['content']
         task_date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        print(task_content,task_date,iduser)
         try:
             print(task_content,task_date,iduser)
-            add_task(task_content,task_date,iduser)
+            addtask(task_content,task_date,iduser)
             return redirect('/')
         except:
             return 'there was an issue adding your task'  
@@ -97,9 +95,9 @@ def create_app(name):
     def update_task(id):
         task = fetch_task_by_userid(id,session['iduser'])
         if request.method == 'POST':
-            task.content = request.form['content']
+            new_content = request.form['content']
             try:
-                update_task(task.content,task.date,task.state,task.iduser)
+                updatetask(new_content,task[2],session['iduser'],task[0])
                 return redirect('/')
             except:
                 return 'There was an issue updating your task'
@@ -112,20 +110,21 @@ def create_app(name):
     def detele_task(id):
         task_to_delete = fetch_task_by_userid(id,session['iduser'])
         try:
-            detele_task(task_to_delete.id)
+            deletetask(task_to_delete[0])
             return redirect('/')
         except:
             return 'There was a problem deleting that task'
 
     @app.route('/done/<int:id>')
     def update_task_state(id):
-        task = fetch_task_by_userid(id,session['iduser'])
-        if task.state == 0:
-            task.state = 1
+        iduser= session['iduser']
+        task = fetch_task_by_userid(id,iduser)
+        if task[3]== 0:
+            new_task_state = 1
         else:  
-            task.state = 0 
+            new_task_state = 0 
         try:
-            update_task(task.content,task.date,task.state,task.iduser)
+            updatetaskstate(id,new_task_state)
             return redirect('/')
         except:
             return 'There was an issue changing the state of your task'

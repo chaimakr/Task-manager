@@ -22,9 +22,9 @@
         <td> {{ task[2] }}</td>
         <td> {% if task[3] == 0 %}incompleted{% else %} completed {% endif %}</td>
         <td>
-            <a class="button" href="/update/{{task.id }}">Update</a>
-            <a class="button" href="/delete/{{task.id}}">Delete</a>
-            <a class="button" href="/done/{{task.id}}" >{% if task[3] == 0 %}Done{% else %} Undone {% endif %}</a>
+            <a class="button" href="/update/{{task[0] }}">Update</a>
+            <a class="button" href="/delete/{{task[0]}}">Delete</a>
+            <a class="button" href="/done/{{task[0]}}" >{% if task[3] == 0 %}Done{% else %} Undone {% endif %}</a>
 
         </td>
     </tr>
