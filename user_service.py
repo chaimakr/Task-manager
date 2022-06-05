@@ -34,7 +34,7 @@ def fetch_user_by_username(username):
         return False,error
     return user
 
-def fetch_allusers(username):
+def fetch_allusers():
     database_filename = os.environ.get('DATABASE_FILENAME')
     connection = sqlite3.connect(database_filename, check_same_thread=False)
     cur = connection.cursor()
