@@ -1,4 +1,4 @@
 .history
 venv
 __pycache__
-./Tests/__pycache__
+./Tests/*/__pycache__

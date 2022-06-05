@@ -1,9 +1,11 @@
 import os, sqlite3
+from unittest import result
 
 def adduser(username,password):
     database_filename = os.environ.get('DATABASE_FILENAME')
     connection = sqlite3.connect(database_filename, check_same_thread=False)
-    connection.execute(
+    cur = connection.cursor()
+    cur.execute(
     "INSERT INTO USER (USERNAME,PASSWORD) VALUES (?,?);",(username,password,))
     connection.commit()
 
@@ -31,3 +33,11 @@ def fetch_user_by_username(username):
         error="User not registered in database"
         return False,error
     return user
+
+def fetch_allusers(username):
+    database_filename = os.environ.get('DATABASE_FILENAME')
+    connection = sqlite3.connect(database_filename, check_same_thread=False)
+    cur = connection.cursor()
+    users=cur.execute("SELECT * FROM USER ;",).fetchall()
+    connection.commit()
+    return users
