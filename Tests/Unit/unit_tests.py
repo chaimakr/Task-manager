@@ -8,7 +8,7 @@ from user_service import adduser, verifyUser, fetch_user_by_username ,fetch_allu
 os.environ['DATABASE_FILENAME'] = 'test.db'
 
 #to run the test:
-#coverage run -m unittest Tests\Unit\unit_tests.py
+#coverage run -m unittest Tests\Unit\test_unit_tests.py
 class TestAddUser(TestCase):
     @patch("user_service.sqlite3", spec=sqlite3)
     def test_addUser(self, mocked_object):

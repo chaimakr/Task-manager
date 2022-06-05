@@ -1,15 +1,24 @@
 from ast import dump
 from datetime import datetime
 from click import launch
-from flask import Flask, render_template, session, url_for , request , redirect , flash
+from flask import Flask, render_template, session, url_for , request , redirect 
 from flask_session import Session
 from database import create_db
 from task_service import *
 from user_service import *
 from datetime import datetime
 
-def create_app(name):
-    app = Flask(name, template_folder='Templates')
+def create_app(name, test=False):
+    if test:
+        app = Flask(name,template_folder='../../Templates')
+    else:
+        app = Flask(name, template_folder='Templates')
+    
+
+    @app.route('/test', methods=['GET'])
+    def test():
+        return 'test'
+
     @app.route('/', methods=['GET'])
     def index():
         if 'logged_in' in session and session['logged_in']:

@@ -9,7 +9,7 @@ from user_service import deleteUserTest
 import os
 
 #to run the test:
-#coverage run -m unittest "e2e\e2e_tests.py"
+#coverage run -m unittest "e2e\test_e2e_tests.py"
 
 class TaskManagerTest(TestCase):
 
