@@ -1,5 +1,4 @@
 flask
-session
 flask_session
 unittest
 coverage
