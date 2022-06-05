@@ -5,3 +5,5 @@ flask_session
 unittest
 coverage
 Flask-Testing
+selenium
+webdriver-manager

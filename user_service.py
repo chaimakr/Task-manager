@@ -41,3 +41,19 @@ def fetch_allusers():
     users=cur.execute("SELECT * FROM USER ;",).fetchall()
     connection.commit()
     return users
+
+def deleteUser(username):
+    database_filename = os.environ.get('DATABASE_FILENAME')
+    connection = sqlite3.connect(database_filename)
+    connection.execute(
+        "DELETE FROM USER WHERE USERNAME LIKE ?;", (username,))
+    connection.commit()
+    connection.close()
+
+def deleteUserTest(username):
+    database_filename = 'teste2e.db'
+    connection = sqlite3.connect(database_filename)
+    connection.execute(
+        "DELETE FROM USER WHERE USERNAME LIKE ?;", (username,))
+    connection.commit()
+    connection.close()

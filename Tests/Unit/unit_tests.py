@@ -52,10 +52,10 @@ class TestFetchById(TestCase):
     @patch("task_service.sqlite3")
     def test_task_fetchById_exists(self, mocked_object):
         # Given
-        mocked_object.connect().cursor().execute().fetchone.return_value = (6,'pet namoussa','05/06/2022 14:36:05',1,4)
-        expected_task = (6,'pet namoussa','05/06/2022 14:36:05',1,4)
+        mocked_object.connect().cursor().execute().fetchone.return_value = (1,'pet namoussa','05/06/2022 14:36:05',1,3)
+        expected_task = (1,'pet namoussa','05/06/2022 14:36:05',1,3)
         # When
-        result_task = fetch_by_id(6)
+        result_task = fetch_by_id(1)
         # Then
         self.assertEqual(expected_task, result_task)
     @patch("task_service.sqlite3")
@@ -72,8 +72,8 @@ class TestFetchAll(TestCase):
     @patch("user_service.sqlite3")
     def test_fetchAll_full(self, mocked_object):
         # Given
-        mocked_object.connect().cursor().execute().fetchall.return_value = [("admin","admin"),("root","root"),("chaima","0000"),("chaimakr","0000"),("STRAWHATT4","0000")]
-        expected_product = [("admin","admin"),("root","root"),("chaima","0000"),("chaimakr","0000"),("STRAWHATT4","0000")]
+        mocked_object.connect().cursor().execute().fetchall.return_value = [("admin","admin"),("root","root"),("chaima","0000")]
+        expected_product = [("admin","admin"),("root","root"),("chaima","0000")]
         # When
         result_product = fetch_allusers()
         # Then
@@ -95,7 +95,7 @@ class TestAddTask(TestCase):
         # Given
         mock_execute=(mocked_object.connect.return_value.execute)
         # When
-        addtask('feed namoussa','05/06/2022 14:36:05',4)
+        addtask('feed namoussa','05/06/2022 14:36:05',3)
         # Then
         mock_execute.assert_called_once()
 
@@ -104,7 +104,7 @@ class TestAddTask(TestCase):
         # Given
         mock_execute=(mocked_object.connect.return_value.execute)
         # When
-        updatetask('feed namoussa','05/06/2022 14:36:05',4,6)
+        updatetask('feed namoussa','05/06/2022 14:36:05',3,1)
         # Then
         mock_execute.assert_called_once()
 

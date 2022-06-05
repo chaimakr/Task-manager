@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-<h2>Welcome to your Task Manager App</h2>
+<h2 id="title_homepage">Welcome to your Task Manager App</h2>
 <p>This application was made specially for the Test and Devops workshops, it was fully inspired from one of freeCodeCamp.org
 tutorial and it was a great opportunity to work with flask !</p>
 <p><strong>Note : </strong>You can check the tutorial I followed from <a href="https://www.youtube.com/watch?v=Z1RJmh_OqeA&ab_channel=freeCodeCamp.org">here</a> , I added authentification feature and changed the task model structure.</p>
@@ -15,8 +15,8 @@ tutorial and it was a great opportunity to work with flask !</p>
 </header>
 
 <section>
-    <a href="/signup" class="button">Sign up</a>
-    <a href="/login" class="button">Sign in</a>
+    <a href="/signup" id="SignUp" class="button">Sign up</a>
+    <a href="/login" id="SignIn" class="button">Sign in</a>
 </section>
 
 {% endblock %} 
