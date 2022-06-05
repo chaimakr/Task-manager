@@ -49,5 +49,72 @@ def test_signIn_get(test_client):
     assert expected_status_code == response.status_code
     assert expected_page_title in response.data
 
+def test_signIn_get(test_client):
+    # Given
+    expected_status_code = 200
+    expected_page_title = b"<h1>Sign Up</h1>"
+    # When
+    response = test_client.get('/signup',follow_redirects=True)
+    # Then
+    assert expected_status_code == response.status_code
+    assert expected_page_title in response.data
 
+def test_signUp_post(test_client):
+    # Given
+    expected_status_code = 200
+    expected_page_redirection = b"Welcome to your Task Manager App"
+    data_to_register={
+                                        "username":"test",
+                                        "password":"test"
+                    }
+    # When
+    response = test_client.post('/signup',data=data_to_register,follow_redirects=True )
+    # Then
+    assert expected_status_code == response.status_code
+    assert expected_page_redirection in response.data
+
+def test_signIn_post_success(test_client):
+    # Given
+    expected_status_code = 200
+    expected_page_message = b"Hi chaima"
+    data_to_login={
+                                        "username":"chaima",
+                                        "password":"0000"
+                }
+    # When
+    response = test_client.post('/login', data=data_to_login,follow_redirects=True)
+    # Then
+    assert expected_status_code == response.status_code
+    assert expected_page_message in response.data
     
+def test_addtask_post(test_client):
+    # Given
+    expected_status_code = 200
+    expected_page_message = b"Hi chaima"
+    expected_task_content = b"TEST"
+    data_to_add={
+                                        "content":"TEST"
+                                            }
+    with test_client.session_transaction() as session:
+        session['logged_in'] = True
+        session['username'] = "chaima"
+    # When
+    response = test_client.post('/add',data=data_to_add,follow_redirects=True )
+    # Then
+    assert expected_status_code == response.status_code
+    assert expected_page_message in response.data
+    assert expected_task_content in response.data
+
+def test_updatetask_get(test_client):
+    # Given
+    expected_status_code = 200
+    expected_page_title = b"<h1>Update Task</h1>"
+    id_to_update=1
+    with test_client.session_transaction() as session:
+        session['logged_in'] = True
+        session['username'] = "chaima"
+    # When
+    response = test_client.get(f'/update/{id_to_update}')
+    # Then
+    assert expected_status_code == response.status_code
+    assert expected_page_title in response.data
