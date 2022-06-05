@@ -17,11 +17,20 @@ def fetch_alltasks_by_userid(id):
     connection.close()
     return tasks
 
-def add_task(content,date,state,idowner):
+def fetch_task_by_userid(id,idowner):
+    database_filename = os.environ.get('DATABASE_FILENAME')
+    connection = sqlite3.connect(database_filename, check_same_thread=False)
+    cur = connection.cursor()
+    tasks = cur.execute("SELECT * FROM Task WHERE id = id and idowner = id;").fetchone()
+    connection.close()
+    return tasks
+
+def add_task(content,date,idowner):
     database_filename = os.environ.get('DATABASE_FILENAME')
     connection = sqlite3.connect(database_filename, check_same_thread=False)
     connection.execute(
-        "INSERT INTO Task (CONTENT,DATE,STATE,IDOWNER) VALUES (?,?,?,?);", (content,date,state,idowner))
+        "INSERT INTO Task (CONTENT,DATE,IDOWNER) VALUES (?,?,?);", (content,date,idowner,))
+    print("task added")
     connection.commit()
 
 def update_task(content,date,state,idowner):

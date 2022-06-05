@@ -7,9 +7,12 @@ def create_db(database_filename):
     cur.execute("DROP TABLE IF EXISTS Task")
     cur.execute("DROP TABLE IF EXISTS User")
     cur.execute(
-        "CREATE TABLE Task (ID INTEGER PRIMARY KEY AUTO_INCREMENT, CONTENT TEXT NOT NULL, DATE TEXT NOT NULL, STATE INTEGER DEFAULT 0 , FOREIGN KEY(idowner) REFERENCES USER(id));")
+        "CREATE TABLE Task (ID INTEGER PRIMARY KEY, CONTENT TEXT NOT NULL, DATE TEXT NOT NULL, STATE INTEGER DEFAULT 0 , IDOWNER INTERGER NOT NULL ,FOREIGN KEY(IDOWNER) REFERENCES User(ID));")
     cur.execute(
         "CREATE TABLE User (ID INTEGER PRIMARY KEY, USERNAME TEXT NOT NULL, PASSWORD TEXT NOT NULL);")
+    cur.execute(
+        "INSERT INTO User (USERNAME,PASSWORD) VALUES ('admin','admin'),('root','root'),('chaima','0000');")
     connection.commit()
     print("Done")
     connection.close()
+#create_db("test.db")

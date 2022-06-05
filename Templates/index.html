@@ -18,20 +18,20 @@
     </tr>
     {% for task in tasks %}
     <tr>
-        <td>{{ task.content}}</td>
-        <td> {{task.create_at.strftime("%d/%m/%y %H:%M")}}</td>
-        <td> {% if task.state == 0 %}incompleted{% else %} completed {% endif %}</td>
+        <td>{{ task[1] }}</td>
+        <td> {{ task[2] }}</td>
+        <td> {% if task[3] == 0 %}incompleted{% else %} completed {% endif %}</td>
         <td>
             <a class="button" href="/update/{{task.id }}">Update</a>
             <a class="button" href="/delete/{{task.id}}">Delete</a>
-            <a class="button" href="/done/{{task.id}}" >{% if task.state == 0 %}Done{% else %} Undone {% endif %}</a>
+            <a class="button" href="/done/{{task.id}}" >{% if task[3] == 0 %}Done{% else %} Undone {% endif %}</a>
 
         </td>
     </tr>
     {% endfor %}    
 </table>
 {% endif %}
-<form action="/add/{{session.iduser}}" method="POST">
+<form action="/add" method="POST">
     <input type="text" name="content" id="content">
     <input type="submit" value="Add Task">
 </form>
