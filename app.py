@@ -1,41 +1,23 @@
-import datetime
-from functools import wraps
-from ssl import create_default_context
+from ast import dump
 from flask import Flask, render_template, session, url_for , request , redirect , flash
-from flask_sqlalchemy import SQLAlchemy
-from database import create_db
 from flask_session import Session
-import requests
+from Models import db, Todo, User
+from database import create_db
 
 
-app =  Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
-db = SQLAlchemy(app)
-sess = Session(app)
+def create_app():
+    app = Flask(__name__)
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+    db.init_app(app)
+    return app
 
-class Todo(db.Model):
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
-    content = db.Column(db.String(200), nullable=False)
-    create_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-    state = db.Column(db.Integer, default=0)
-    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-def __repr__(self):
-    return '<Task %r>' % self.id
 
-class User(db.Model):
-    id =  db.Column(db.Integer, primary_key=True, nullable=False)
-    username = db.Column(db.String(200), nullable=False)
-    password = db.Column(db.String(200), nullable=False)
-    tasks = db.relationship('Todo', backref = 'User', cascade = 'all, delete-orphan', lazy = 'dynamic')
-
-def __repr__(self):
-    return '<Task %r>' % self.id
 
 
 @app.route('/', methods=['GET'])
 def index():
-    if session['logged_in'] == True:
+    if 'logged_in' in session and session['logged_in']:
         return render_template('index.html', tasks = Todo.query.filter_by(owner_id = session['iduser']).all())
     else:    
         return render_template('home.html')
@@ -55,16 +37,17 @@ def login_post():
     if user is None:
         return redirect(url_for('login_get'))
     if user.password == request.form['password']:
+        #print(session)
         session['logged_in'] = True
         session['username'] = user.username
         session['iduser'] = user.id
-        return redirect(url_for('tasks', session=session))
+        return redirect(url_for('get_tasks', session=session))
     else:
         return render_template('login.html')
 
 @app.route("/logout")
 def logout():
-    if session['logged_in'] == True:
+    if 'logged_in' in session and session['logged_in']:
         session['logged_in'] = False
         session.pop('username')
         session.pop('iduser')
@@ -79,22 +62,19 @@ def add_user():
     if request.method == 'POST':
         username= request.form['username']
         password= request.form['password']
-        new_user = User(username=username, password=password)
         try:
-            db.session.add(new_user)
-            db.session.commit()
+            add_user(username,password)
             return redirect('/')
         except:
             return 'there was an issue signing up'
     else:
-        flash('User already exists')
         return render_template('signup.html')
 
 
     
 
 @app.route('/tasks', methods=['GET'])
-def tasks():
+def get_tasks():
     tasks = Todo.query.filter_by(owner_id = session['iduser']).all()
     return render_template('index.html', tasks=tasks)
 
@@ -151,9 +131,18 @@ def update_task_state(id):
         return redirect('/')
     except:
         return 'There was an issue changing the state of your task'
-  
+def launch( db='info.db', create=False):
+    if create:
+        create_db(db)
+    os.environ['DATABASE_FILENAME'] = db
+    app = create_app(__name__)
+    app.secret_key = 'secret'
+    sess = Session(app)
+    app.run(debug = True)
+
+
 if __name__ == '__main__':
-    app.secret_key = 'strawhatt4'
-    app.config['SESSION_TYPE'] = 'filesystem' 
+    app.config['SESSION_TYPE'] = 'filesystem'
+    app.secret_key = 'super secret key'
     sess.init_app(app)
     app.run(debug=True)

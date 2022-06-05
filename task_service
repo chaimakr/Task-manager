@@ -1,0 +1,46 @@
+import sqlite3
+import os
+
+def fetch_by_id(id):
+    database_filename = os.environ.get('DATABASE_FILENAME')
+    connection = sqlite3.connect(database_filename, check_same_thread=False)
+    cur = connection.cursor()
+    task= cur.execute("SELECT * FROM TASK WHERE ID=?;", (id,)).fetchone()
+    connection.close()
+    return task
+
+def fetch_alltasks_by_userid(id):
+    database_filename = os.environ.get('DATABASE_FILENAME')
+    connection = sqlite3.connect(database_filename, check_same_thread=False)
+    cur = connection.cursor()
+    tasks = cur.execute("SELECT * FROM Task WHERE idowner = id;").fetchall()
+    connection.close()
+    return tasks
+
+def add_task(content,date,state,idowner):
+    database_filename = os.environ.get('DATABASE_FILENAME')
+    connection = sqlite3.connect(database_filename, check_same_thread=False)
+    connection.execute(
+        "INSERT INTO Task (CONTENT,DATE,STATE,IDOWNER) VALUES (?,?,?,?);", (content,date,state,idowner))
+    connection.commit()
+
+def update_task(content,date,state,idowner):
+    database_filename = os.environ.get('DATABASE_FILENAME')
+    connection = sqlite3.connect(database_filename, check_same_thread=False)
+    connection.execute(
+        "UPDATE Task SET NAME=?, PRICE=?, QUANTITY=? WHERE ID=?;", (content,date,state,idowner,))
+    connection.commit()
+
+def delete_task(id):
+    database_filename = os.environ.get('DATABASE_FILENAME')
+    connection = sqlite3.connect(database_filename, check_same_thread=False)
+    connection.execute(
+        "DELETE FROM Task WHERE ID=?;",(id,))
+    connection.commit()
+
+def update_task_state(id,state):
+    database_filename = os.environ.get('DATABASE_FILENAME')
+    connection = sqlite3.connect(database_filename, check_same_thread=False)
+    connection.execute(
+        "UPDATE Task SET STATE=? WHERE ID=?;",(state,id))
+    connection.commit()
