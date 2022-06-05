@@ -148,7 +148,8 @@ def launch( db='test.db', create=False):
     app.config['SESSION_TYPE'] = 'filesystem'
     sess = Session(app)
     sess.init_app(app)    
-    app.run(debug = True)
+    #app.run(debug = True)
+    app.run(host='0.0.0.0', port=5000)
 
 if __name__ == '__main__':
     app = launch()

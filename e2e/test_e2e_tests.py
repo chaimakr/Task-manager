@@ -27,7 +27,7 @@ class TaskManagerTest(TestCase):
         inst.driver = webdriver.Chrome(ChromeDriverManager().install())
         inst.driver.implicitly_wait(1)
         print("Visiting home page")
-        inst.driver.get('http://127.0.0.1:5000/')
+        inst.driver.get('http://localhost:5000/')
         inst.driver.save_screenshot('./e2e/screenshots/01homepage.png')
 
 

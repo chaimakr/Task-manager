@@ -5,3 +5,4 @@ __pycache__
 /Tests/__pycache__
 /Tests/Integration/__pycache__
 /flask_session
+/e2e/__pycache__
