@@ -25,6 +25,7 @@ class TaskManagerTest(TestCase):
         chrome_options.add_argument("--start-maximized")
         chrome_options.add_argument('--disable-gpu')
         inst.driver = webdriver.Chrome(ChromeDriverManager().install())
+        #inst.driver = webdriver.Chrome("./chrome.exe",chrome_options=chrome_options)
         inst.driver.implicitly_wait(1)
         print("Visiting home page")
         inst.driver.get('http://localhost:5000/')

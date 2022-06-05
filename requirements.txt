@@ -5,3 +5,4 @@ Flask-Testing
 selenium
 webdriver-manager
 pytest
+chromedriver-binary == 102.0.5005.61
