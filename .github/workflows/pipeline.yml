@@ -60,5 +60,5 @@ jobs:
           sudo docker kill todo
           sudo docker container rm todo
           sudo docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/task-manager:${{ github.sha }}
-          sudo docker run -d -p 5000:5000 --name todo ${{ secrets.DOCKER_HUB_USERNAME }}/task-manager:${{ github.sha }}
+          sudo docker run -d -p 5000:5000 --name todo ${{ secrets.DOCKER_HUB_USERNAME }}/task-manager:${{ github.sha }} '
   
