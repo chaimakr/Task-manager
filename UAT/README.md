@@ -2,4 +2,4 @@
 
 - This document represents an example scenario of UAT, features tested are :
   - Adding a new user
-  - Adding , Updating and deleting a new task
+  - Adding , Updating and Deleting a new task
