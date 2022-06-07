@@ -34,7 +34,11 @@ CI/CD Pipeline on Push in the Main Branch :
     3. Pull the new image.
     4. Run the new image.
     
-![Screenshot](./static/img/green_pipeline.png)
-You can access the app [Task Manager](http://3.69.48.195:5000/)
-
+<p align="center">
+    <img src="./static/img/green_pipeline.PNG" alt="Pipeline">
+</p>
+You can access the app <a href="http://3.69.48.195:5000/">Task Manager</a>
+<p align="center">
+    <img src="./static/img/app deployed. png.PNG" alt="Deployed App">
+</p>
 
