@@ -12,7 +12,7 @@
 __A database teste2e.db is created at the start of the test and removed at the end of it , after each test a screenshot is saved in the screenshots folder__
 ### Test Execution: 
 <p align="center">
-    <img src="./static/img/e2e OK.PNG" alt="End 2 End execution">
+    <img src="../static/img/e2e OK.PNG" alt="End 2 End execution">
 </p>
 
 Side note: I used webdriver-manager locally to dynamically install chrome driver depending on the browser version we're testing on, 
