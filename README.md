@@ -39,6 +39,6 @@ CI/CD Pipeline on Push in the Main Branch :
 </p>
 You can access the app <a href="http://3.69.48.195:5000/">Task Manager</a>
 <p align="center">
-    <img src="./static/img/app deployed. png.PNG" alt="Deployed App">
+    <img src="./static/img/app deployed.PNG" alt="Deployed App">
 </p>
 
